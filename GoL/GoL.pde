@@ -1,6 +1,6 @@
 //Code for main
-final int arraySize = 53;
-Cell[][] mesh = new Cell[arraySize][arraySize];  //for 900x900, 53x53 is a good array size when strokeWeight=10
+final int arraySize = 265;
+Cell[][] mesh = new Cell[arraySize][arraySize];  
 int gen = 0;
 
 void setup() {
@@ -10,7 +10,7 @@ void setup() {
   size(800, 800);
   smooth(4);
   stroke(255);
-  strokeWeight(10);
+  strokeWeight(2);
   background(0, 0, 0);
 }
 
@@ -37,7 +37,7 @@ public int countLifeCells(){
 }
 
 public void defineInitialMesh() {
-  final float STEP = 15;
+  final float STEP = 3;
   float x = 5;                      //Change to margin
   float y = 5;
 
@@ -106,29 +106,66 @@ public void updateLocalState() {
 //Code for class cell
 class Cell {
   //Relevant data
-  final float LCH = 14.5;            //Chance of cell of being alive at start
-  private boolean state;             //Can be true means alive, false dead
+  final float LCH = 14;            //Chance of cell of being alive at start
+  private boolean state;             //true means alive, false dead
   private int nli;                   //Neighbour life index
 
   //Printing data
   private float posX;
   private float posY;
 
-  //GAME RULE [originalGoL: Birth-> ne=3,Death-> ne<2 or ne>3 this means the ruleString is B3/S23 ]
-  final int BIRTH = 3;    //Number of life cells needed to spring death cell to life
-  final int LTRESH = 2;   //Lesser value of neighboring-alive-cells treshold on which a cell does not die.
-  final int RTRESH = 3;   //Greater value of neighboring-alive-cells treshold on which a cell does not die
+  /*
+    Game RuleString are read as such -> B3/S23 (default Conways GoL)
+    
+    -The numbers following B are the values needed to spring a dead cell back to life.
+    -The numbers following S are tha values needed to maintain cell alive
+    
+    -Values are alive neighboring cell
+    -This system contains NO loopover
+    
+    -B & S are contained on the system as lists, modify the method setRulestring() to
+    change game rules
+    
+    {Different Rstrs:
+      ->Replicator: B1357/S/1357
+      ->Logarithmic Repl.: B36/S245
+      ->Walled cities: B2345/S45678
+      ->Star Trek: B3/S0248
+      ->Seeds: B2/S
+      ->Live free or die: B2/S0
+      ->Flocks: B3/S12
+      ->Maze: B3/S12345
+      ->Gnarl: B1/S1
+      ->Asimilation: B345/S4567
+      ->Coagulation: B378/S235678
+  */
+  
+  //RuleStrings
+  private ArrayList birthRules = new ArrayList();  
+  private ArrayList sustainRules = new ArrayList();
+  
+  private void setRulestring(){
+    //Death to life
+    birthRules.add(3);
+  
+    //Sustain
+    sustainRules.add(2);
+    sustainRules.add(3);
+      
+  }
 
   //Constructor
   public Cell(float x, float y) {
     this.state = throwRandomState();
     this.posX = x;
     this.posY = y;
+    
+    setRulestring();
   }
 
   //Utility methods
   private boolean throwRandomState() {
-    int index = int(random(1, 100));
+    int index = int(random(0.001, 100));
     if (index <= LCH) {
       return true;
     } else {
@@ -138,11 +175,11 @@ class Cell {
 
   public void updateState() {
     if(!state){
-      if(this.nli == BIRTH){
+      if(birthRules.contains(this.nli)){
         this.state=true;
       }
     } else {
-      if(!(this.nli >= LTRESH && this.nli <= RTRESH)){
+      if(!(sustainRules.contains(this.nli))){
         this.state = false;
       }
     }
