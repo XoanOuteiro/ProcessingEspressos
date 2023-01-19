@@ -106,7 +106,7 @@ public void updateLocalState() {
 //Code for class cell
 class Cell {
   //Relevant data
-  final float LCH = 14;            //Chance of cell of being alive at start
+  final float LCH = 2;            //Chance of cell of being alive at start
   private boolean state;             //true means alive, false dead
   private int nli;                   //Neighbour life index
 
@@ -127,7 +127,7 @@ class Cell {
     change game rules
     
     {Different Rstrs:
-      ->Replicator: B1357/S/1357
+      ->Replicator: B1357/S1357
       ->Logarithmic Repl.: B36/S245
       ->Walled cities: B2345/S45678
       ->Star Trek: B3/S0248
@@ -147,10 +147,17 @@ class Cell {
   private void setRulestring(){
     //Death to life
     birthRules.add(3);
+    birthRules.add(7);
+    birthRules.add(8);
   
     //Sustain
     sustainRules.add(2);
     sustainRules.add(3);
+    sustainRules.add(5);
+    sustainRules.add(6);
+    sustainRules.add(7);
+    sustainRules.add(8);
+    
       
   }
 
