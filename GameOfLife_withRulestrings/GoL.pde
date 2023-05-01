@@ -147,16 +147,13 @@ class Cell {
   private void setRulestring(){
     //Death to life
     birthRules.add(3);
-    birthRules.add(7);
-    birthRules.add(8);
   
     //Sustain
+    sustainRules.add(1);
     sustainRules.add(2);
     sustainRules.add(3);
+    sustainRules.add(4);
     sustainRules.add(5);
-    sustainRules.add(6);
-    sustainRules.add(7);
-    sustainRules.add(8);
     
       
   }
