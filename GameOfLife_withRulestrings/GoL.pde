@@ -106,7 +106,7 @@ public void updateLocalState() {
 //Code for class cell
 class Cell {
   //Relevant data
-  final float LCH = 2;            //Chance of cell of being alive at start
+  final float LCH = 20;            //Chance of cell of being alive at start
   private boolean state;             //true means alive, false dead
   private int nli;                   //Neighbour life index
 
@@ -147,13 +147,14 @@ class Cell {
   private void setRulestring(){
     //Death to life
     birthRules.add(3);
-  
+    birthRules.add(4);
+    birthRules.add(5);
+    
     //Sustain
-    sustainRules.add(1);
-    sustainRules.add(2);
-    sustainRules.add(3);
     sustainRules.add(4);
     sustainRules.add(5);
+    sustainRules.add(6);
+    sustainRules.add(7);
     
       
   }
