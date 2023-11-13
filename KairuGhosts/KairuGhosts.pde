@@ -11,6 +11,8 @@ void setup(){
 
 void draw(){
 
+  setup() //reload screen
+
 }
 
 
