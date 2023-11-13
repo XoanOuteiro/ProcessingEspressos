@@ -134,7 +134,7 @@ class Origin{
   
     PVector position;
     PVector direction;
-    float speed; //Generated random on init
+    float speed;
 
     Origin(int posX, int posY){
         this.position = new PVector(posX,posY);
