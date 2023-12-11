@@ -29,6 +29,7 @@ void draw(){
  
 
 void spawnAutoLine(){
+
   for( int i = 0; i < 900; i++){
     boolean correct = false;
     while(!correct){
@@ -39,7 +40,16 @@ void spawnAutoLine(){
       }
     }
   }
-    
+}
+
+boolean inHolder(float i){
+ 
+  for(float f : mainHolder){
+    if(f == i){
+     return true; 
+    } 
+  }
+  return false;
 }
 
 void sort(int curPos){
